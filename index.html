@@ -1,12 +1,112 @@
-<html>
+<!DOCTYPE html>
+<html lang="zh-CN">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>归于寂静 - 冰书 BingBook</title>
+    <style>
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #212529;
+            --accent-color: #6c757d;
+        }
 
-  <meta charset="UTF-8">
-    <title>        </title>
-    <meta http-equiv="refresh" content="0;url=https://bingbook.cn
-">
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: var(--bg-color);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 600px;
+            padding: 20px;
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        h1 {
+            font-weight: 300;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .divider {
+            width: 50px;
+            height: 1px;
+            background-color: var(--accent-color);
+            margin: 20px auto;
+        }
+
+        p {
+            font-size: 1.1rem;
+            color: var(--accent-color);
+            margin-bottom: 2rem;
+        }
+
+        .quote {
+            font-style: italic;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+            color: #adb5bd;
+        }
+
+        .footer {
+            margin-top: 4rem;
+            font-size: 0.8rem;
+            color: #ced4da;
+        }
+
+        a {
+            color: var(--accent-color);
+            text-decoration: none;
+            border-bottom: 1px solid transparent;
+            transition: border-bottom 0.3s;
+        }
+
+        a:hover {
+            border-bottom: 1px solid var(--accent-color);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
+
+    <div class="container">
+        <h1>冰书</h1>
+        <div class="divider"></div>
+        <p>
+            感谢这段跨越山海的旅程。<br>
+            基于现实环境与合规考量，本站即日起停止更新。
+        </p>
+        
+        <p style="font-size: 1rem;">
+            灯火虽熄，但望向窗外的眼睛不应闭上。<br>
+            愿我们在更广阔、更自由的时空再见。
+        </p>
+
+        <div class="quote">
+            "Thinking is the only light we have."
+        </div>
+
+        <div class="footer">
+            2023 - 2035 | Powered by a decade of memory. <br>
+            <!-- 如果有Newsletter或联系方式，可以放在下面，没有则删掉 -->
+            Contact: mail@bingbook.cn
+            <!-- Contact: your-email@example.com -->
+        </div>
+    </div>
 
 </body>
 </html>
