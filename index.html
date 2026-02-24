@@ -3,16 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>缤书 | 记录时代里的每一种颜色</title>
     
+    <!-- SEO 关键词优化 -->
+    <title>BINGBOOK | 缤书 - 记录时代里的每一种颜色</title>
+    <meta name="keywords" content="BINGBOOK, 缤书, 公众号, 文学, 生活美学, 深度阅读, 创意写作, 每周二五更新">
+    <meta name="description" content="BINGBOOK（缤书）是一个专注于发现生活缤纷色彩的内容平台。在这个飞速流动的时代，我们依然相信文字的重量。每周二、周五上午10:00，在这里陪你翻开生活的新页，见字如面。">
+    <meta name="author" content="BINGBOOK Team">
+
+    <!-- 社交媒体分享预览 -->
+    <meta property="og:title" content="BINGBOOK | 见字如面">
+    <meta property="og:description" content="每周二、周五 早10点，陪你翻开生活的新页。">
+
     <!-- 引入思源宋体 -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;500;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;400;500;900&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            --bg: #f8f6f2; /* 这种淡淡的米黄色最有书卷气 */
+            --bg: #f9f7f3; /* 纸质触感底色 */
             --text: #1a1a1a;
-            --accent: #8e2e2e; /* 深书红色，点睛之笔 */
+            --accent: #8e2e2e; /* 经典书红色 */
             --font-serif: 'Noto Serif SC', serif;
         }
 
@@ -24,215 +33,242 @@
             color: var(--text);
             font-family: var(--font-serif);
             overflow-x: hidden;
-            line-height: 1.7;
+            line-height: 1.8;
+            -webkit-font-smoothing: antialiased;
         }
 
-        /* 动画初始状态：隐藏且模糊 */
+        /* 动画初始状态 */
         .reveal {
             opacity: 0;
-            transform: translateY(50px);
-            filter: blur(20px);
-            transition: all 1.5s cubic-bezier(0.22, 1, 0.36, 1);
+            transform: translateY(40px);
+            filter: blur(10px);
+            transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
         }
 
-        /* 动画激活状态 */
         .reveal.active {
             opacity: 1;
             transform: translateY(0);
             filter: blur(0);
         }
 
-        /* 导航栏 */
+        /* 顶部导航 */
         nav {
             position: fixed;
-            top: 40px; left: 50px;
-            writing-mode: vertical-rl; /* 竖排文字导航 */
+            top: 0; width: 100%;
+            padding: 40px 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             z-index: 1000;
-            letter-spacing: 0.5em;
-            font-weight: 500;
         }
 
-        /* 第一屏：震撼视觉 */
-        .section-hero {
+        .logo-text {
+            font-size: 1.6rem;
+            font-weight: 900;
+            letter-spacing: 0.2em;
+            cursor: pointer;
+        }
+
+        /* 第一屏 */
+        .hero {
             height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
             position: relative;
         }
 
-        .hero-title {
-            font-size: 15vw; /* 极大的字体 */
-            font-weight: 900;
-            color: rgba(0,0,0,0.03); /* 背景大字阴影 */
+        .hero-bg-text {
             position: absolute;
-            white-space: nowrap;
+            font-size: 14vw;
+            font-weight: 900;
+            color: rgba(0,0,0,0.02); /* 极淡的背景装饰 */
+            z-index: 1;
+            user-select: none;
+            letter-spacing: -0.05em;
         }
 
-        .hero-content {
+        .hero-title {
             z-index: 2;
             text-align: center;
         }
 
-        .hero-content h1 {
-            font-size: 3rem;
+        .hero-title h1 {
+            font-size: 3.5rem;
+            letter-spacing: 0.6em;
             font-weight: 500;
-            letter-spacing: 0.5em;
             margin-bottom: 20px;
+            margin-right: -0.6em;
         }
 
-        /* 第二屏：叙事文字 */
-        .section-text {
-            min-height: 100vh;
+        .update-schedule {
+            font-size: 0.9rem;
+            letter-spacing: 0.4em;
+            color: var(--accent);
+            border-top: 1px solid var(--accent);
+            border-bottom: 1px solid var(--accent);
+            padding: 5px 15px;
+            margin-top: 20px;
+            display: inline-block;
+        }
+
+        /* 文字叙事区 */
+        .story-section {
+            padding: 150px 15%;
+            min-height: 80vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 0 15%;
         }
 
-        .manifesto-line {
+        .story-line {
             font-size: 1.8rem;
-            margin-bottom: 80px;
-            display: block;
+            margin-bottom: 60px;
+            font-weight: 400;
             max-width: 800px;
         }
 
-        .manifesto-line.right { align-self: flex-end; text-align: right; }
-
-        /* 第三屏：互动区域（公众号） */
-        .section-cta {
-            height: 120vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: #fff; /* 这里切换纯白，产生视觉切割感 */
+        .story-line.alt {
+            align-self: flex-end;
+            text-align: right;
         }
 
-        .qr-container {
-            position: relative;
-            padding: 60px;
+        /* 二维码引导区 */
+        .cta-section {
+            padding: 150px 20px;
+            background-color: #ffffff;
+            text-align: center;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .qr-box {
+            display: inline-block;
+            padding: 40px;
             border: 1px solid #eee;
-        }
-
-        .qr-container::before {
-            content: "扫码关注「缤书」";
-            position: absolute;
-            top: -15px; left: 50%;
-            transform: translateX(-50%);
+            position: relative;
             background: #fff;
-            padding: 0 20px;
+            transition: 0.5s;
+        }
+
+        .qr-box:hover {
+            box-shadow: 0 30px 60px rgba(0,0,0,0.05);
+            transform: translateY(-5px);
+        }
+
+        .qr-box img {
+            width: 200px;
+            height: 200px;
+            filter: grayscale(100%);
+            transition: 0.8s;
+        }
+
+        .qr-box:hover img {
+            filter: grayscale(0%);
+        }
+
+        .cta-text {
+            margin-top: 40px;
+        }
+
+        .cta-text h3 {
+            font-size: 1.6rem;
+            font-weight: 500;
+            letter-spacing: 0.3em;
+            margin-bottom: 15px;
+        }
+
+        .cta-text .time-tag {
+            color: #999;
             font-size: 0.9rem;
-            letter-spacing: 5px;
-            color: var(--accent);
+            letter-spacing: 0.2em;
         }
 
-        .qr-img {
-            width: 220px;
-            height: 220px;
-            background: #f9f9f9;
-            transition: transform 0.5s;
+        footer {
+            padding: 100px 0;
+            text-align: center;
+            background: #fff;
+            font-size: 0.75rem;
+            color: #bbb;
+            letter-spacing: 3px;
         }
 
-        .qr-container:hover .qr-img {
-            transform: scale(1.05);
-        }
-
-        /* 底部装饰 */
-        .scroll-indicator {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            animation: bounce 2s infinite;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {transform: translateY(0) translateX(-50%);}
-            40% {transform: translateY(-10px) translateX(-50%);}
-            60% {transform: translateY(-5px) translateX(-50%);}
-        }
-
-        /* 移动端优化 */
+        /* 响应式适配 */
         @media (max-width: 768px) {
-            nav { left: 20px; top: 20px; font-size: 0.8rem; }
-            .hero-content h1 { font-size: 1.8rem; }
-            .manifesto-line { font-size: 1.2rem; }
-            .section-text { padding: 0 10%; }
+            nav { padding: 30px; }
+            .hero-title h1 { font-size: 2.2rem; }
+            .story-section { padding: 80px 10%; }
+            .story-line { font-size: 1.2rem; }
+            .hero-bg-text { font-size: 20vw; }
         }
     </style>
 </head>
 <body>
 
-    <nav>探索 · 缤书 · 每一个夜晚</nav>
+    <nav>
+        <div class="logo-text">BINGBOOK</div>
+        <div style="font-size: 0.7rem; letter-spacing: 3px;">COLLECTOR</div>
+    </nav>
 
-    <!-- 第一屏 -->
-    <section class="section-hero">
-        <div class="hero-title">BING BOOK</div>
-        <div class="hero-content reveal">
-            <h1>缤书</h1>
-            <p style="letter-spacing: 1em; color: var(--soft-gray);">见字 · 如面</p>
-        </div>
-        <div class="scroll-indicator">↓ 滑动开启</div>
-    </section>
-
-    <!-- 第二屏：逐行浮现的文字 -->
-    <section class="section-text">
-        <span class="manifesto-line reveal">在这个飞速流动的时代，</span>
-        <span class="manifesto-line reveal right">我们依然相信文字的重量。</span>
-        <span class="manifesto-line reveal">「缤书」</span>
-        <span class="manifesto-line reveal right" style="color: var(--accent);">致力于记录那些被忽略的情绪，</span>
-        <span class="manifesto-line reveal">和那些闪光的、缤纷的瞬间。</span>
-    </section>
-
-    <!-- 第三屏：引导关注 -->
-    <section class="section-cta">
-        <div class="reveal" style="text-align: center; margin-bottom: 50px;">
-            <h2 style="font-size: 2.5rem; font-weight: 200; margin-bottom: 20px;">这里，是千万人的精神栖息地。</h2>
-            <p style="color: #888;">我们不只是一个公众号，我们是一种生活方式。</p>
-        </div>
-
-        <div class="qr-container reveal">
-            <!-- 替换为你的真实二维码图片 -->
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=220x220&data=BINSHU" alt="QR" class="qr-img">
-        </div>
-
-        <div class="reveal" style="margin-top: 40px; letter-spacing: 2px; font-size: 0.8rem; color: #bbb;">
-            每周二 周五 10:30，不见不散
+    <section class="hero">
+        <!-- 动态视差背景字 -->
+        <div class="hero-bg-text" id="parallaxText">BINGBOOK</div>
+        
+        <div class="hero-title reveal">
+            <h1>缤纷书写</h1>
+            <p style="letter-spacing: 1.2em; color: var(--text); opacity: 0.7; margin-right: -1.2em;">见字如面</p>
+            <div class="update-schedule">周二 周五 早 10:00 更新</div>
         </div>
     </section>
 
-    <footer style="padding: 100px 0 50px; text-align: center; font-size: 0.7rem; color: #ccc;">
-        © 2024 BINGBOOK | 缤书文化传播
+    <section class="story-section">
+        <p class="story-line reveal">生活原本是一本白卷，</p>
+        <p class="story-line alt reveal" style="color: var(--accent);">直到我们开始记录。</p>
+        <p class="story-line reveal">不追逐瞬息万变的潮水，</p>
+        <p class="story-line alt reveal">只沉淀值得反复翻阅的缤纷。</p>
+        <p class="story-line reveal">BINGBOOK，</p>
+        <p class="story-line alt reveal">和你一起，收集时代的温度。</p>
+    </section>
+
+    <section class="cta-section">
+        <div class="reveal">
+            <div class="qr-box">
+                <!-- 请替换为您的真实公众号二维码 -->
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=BINGBOOK_WECHAT" alt="BINGBOOK 公众号二维码">
+            </div>
+            <div class="cta-text">
+                <h3>长按识别关注</h3>
+                <p class="time-tag">每周二 · 周五 上午 10:00，准时开启</p>
+                <div style="margin-top: 30px; font-size: 0.8rem; color: #ccc;">发现生活的另一种可能</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        &copy; 2024 BINGBOOK 缤书 · 版权所有 <br><br>
+        DESIGNED FOR THOUGHTFUL READING
     </footer>
 
     <script>
-        // 高级滚动观察器：当元素进入视口时添加 .active 类
-        const observerOptions = {
-            threshold: 0.2 // 元素出现 20% 时触发
-        };
-
+        // 动画控制：当元素进入视口时触发显示效果
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     entry.target.classList.add('active');
-                } else {
-                    // 如果你想反复播放动画，可以取消下面这行的注释
-                    // entry.target.classList.remove('active'); 
                 }
             });
-        }, observerOptions);
+        }, { threshold: 0.15 });
 
-        // 绑定所有带 .reveal 类的元素
-        document.querySelectorAll('.reveal').forEach(el => {
-            observer.observe(el);
-        });
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // 视差效果：背景大字随滚动轻微移动
+        // 视差滚动：背景大字随鼠标滚动产生位移
         window.addEventListener('scroll', () => {
-            const scrolled = window.pageYOffset;
-            const heroTitle = document.querySelector('.hero-title');
-            heroTitle.style.transform = `translateX(${scrolled * 0.5}px)`;
+            const scrollY = window.pageYOffset;
+            const bgText = document.getElementById('parallaxText');
+            // 随滚动向左缓慢滑动
+            bgText.style.transform = `translateX(${-scrollY * 0.2}px)`;
+            // 滚动越深，透明度越浅
+            bgText.style.opacity = `${0.02 - scrollY * 0.00005}`;
         });
     </script>
 </body>
