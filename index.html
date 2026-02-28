@@ -12,7 +12,7 @@
 
     <!-- 网站 ICO 图标 -->
     <link rel="icon" href="/img/ico.png" type="image/png">
-    
+
     <!-- 引入思源宋体 -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500;700&display=swap" rel="stylesheet">
     <!-- 引入 AOS 动画库 -->
@@ -55,11 +55,19 @@
         }
         header.scrolled { background: rgba(255,255,255,0.85); height: 70px; backdrop-filter: blur(20px); }
 
-        .logo { 
-            font-family: var(--serif); font-size: 22px; font-weight: 700; 
-            letter-spacing: 5px; color: #fff; text-decoration: none; transition: 0.4s;
+        /* Logo 处理 */
+        .logo { display: block; transition: 0.4s; }
+        .logo img { 
+            height: 35px; /* Logo 高度 */
+            width: auto; 
+            display: block;
+            transition: 0.4s;
+            /* 初始状态：如果图片是暗色的，在深色背景下增加亮度使其可见 */
+            filter: brightness(0) invert(1); 
         }
-        header.scrolled .logo { color: var(--black); }
+        header.scrolled .logo img { 
+            filter: none; /* 滚动后恢复原色 */
+        }
 
         .hamburger {
             width: 28px; height: 12px;
@@ -69,7 +77,7 @@
         .hamburger span { display: block; width: 100%; height: 1.5px; background: #fff; transition: 0.4s; }
         header.scrolled .hamburger span { background: var(--black); }
 
-        /* --- 悬浮方块菜单 (仅包裹文字) --- */
+        /* --- 极简悬浮方块菜单 (仅包裹文字) --- */
         .menu-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
             z-index: 2500; visibility: hidden; pointer-events: none; transition: 0.4s;
@@ -129,7 +137,7 @@
         .img-container img { width: 100%; height: 100%; object-fit: cover; transition: 2s; }
         .section-item:hover img { transform: scale(1.05); }
 
-        /* --- 底部 CONTACT  --- */
+        /* --- 底部 CONTACT (对向进入二维码) --- */
         footer { background: #0c0c0c; color: #fff; padding: 120px 10% 60px; overflow: hidden; }
         .footer-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 80px; padding-bottom: 80px; border-bottom: 1px solid #222; }
         
@@ -149,6 +157,7 @@
 
         @media (max-width: 768px) {
             .hero h1 { font-size: 32px; letter-spacing: 8px; }
+            .logo img { height: 28px; } /* 移动端 Logo 缩小 */
             .footer-grid { flex-direction: column; gap: 60px; }
             .footer-qrs { width: 100%; justify-content: space-between; gap: 10px; }
             .qr-card img { width: 100px; height: 100px; }
@@ -160,7 +169,9 @@
 
     <!-- 导航 -->
     <header id="navbar">
-        <a href="#" class="/img/logo.png">缤书BINGBOOK</a>
+        <a href="#" class="logo">
+            <img src="/img/logo.png" alt="缤书 bingbook">
+        </a>
         <div class="hamburger" onclick="toggleMenu()">
             <span></span><span></span><span></span>
         </div>
@@ -244,7 +255,7 @@
                 </div>
                 <div class="c-item">
                     <span class="c-label">COPYRIGHT / 版权微信</span>
-                    <span class="c-value">ProfLong</span>
+                    <span class="c-value">nnn</span>
                 </div>
             </div>
             
@@ -252,19 +263,19 @@
             <div class="footer-qrs">
                 <!-- 公众号从右侧滑入 -->
                 <div class="qr-card" data-aos="fade-left" data-aos-delay="200">
-                    <img src="/img/wx.jpg" alt="微信公众号">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BINGBOOK_MP" alt="微信公众号">
                     <p>微信公众号</p>
                 </div>
                 <!-- 视频号从左侧滑入 -->
                 <div class="qr-card" data-aos="fade-right" data-aos-delay="400">
-                    <img src="/img/sph.png" alt="微信视频号">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BINGBOOK_CHANNELS" alt="微信视频号">
                     <p>微信视频号</p>
                 </div>
             </div>
         </div>
         
         <div class="footer-bottom">
-            <p>© 2026 BINGBOOK PROJECT. ALL RIGHTS RESERVED.</p>
+            <p>© 2024 BINGBOOK PROJECT. ALL RIGHTS RESERVED.</p>
             <p>沪ICP备 2024098866号</p>
         </div>
     </footer>
