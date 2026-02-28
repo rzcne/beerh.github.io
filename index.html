@@ -2,274 +2,304 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- SEO 关键词优化 -->
-    <title>BINGBOOK | 缤书 - 记录时代里的每一种颜色</title>
-    <meta name="keywords" content="BINGBOOK, 缤书, 公众号, 文学, 生活美学, 深度阅读, 创意写作, 每周二五更新">
-    <meta name="description" content="BINGBOOK（缤书）是一个专注于发现生活缤纷色彩的内容平台。在这个飞速流动的时代，我们依然相信文字的重量。每周二、周五上午10:00，在这里陪你翻开生活的新页，见字如面。">
-    <meta name="author" content="BINGBOOK Team">
-
-    <!-- 社交媒体分享预览 -->
-    <meta property="og:title" content="BINGBOOK | 见字如面">
-    <meta property="og:description" content="每周二、周五 早10点，陪你翻开生活的新页。">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>缤书 bingbook | 思想的存档者</title>
     <!-- 引入思源宋体 -->
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@200;400;500;900&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500;700&display=swap" rel="stylesheet">
+    <!-- 引入 AOS 动画库 -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
     <style>
         :root {
-            --bg: #f9f7f3; /* 纸质触感底色 */
-            --text: #1a1a1a;
-            --accent: #8e2e2e; /* 经典书红色 */
-            --font-serif: 'Noto Serif SC', serif;
+            --gold: #b1946a;
+            --black: #111111;
+            --white: #ffffff;
+            --serif: 'Noto Serif SC', serif;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            font-family: var(--font-serif);
+        
+        /* 全站流体背景动画 */
+        body { 
+            font-family: -apple-system, sans-serif; 
+            color: var(--black); 
+            background: linear-gradient(135deg, #ffffff 0%, #f9f9f9 50%, #f2f2f2 100%);
+            background-size: 400% 400%;
+            animation: fluidGradient 15s ease infinite;
             overflow-x: hidden;
-            line-height: 1.8;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* 动画初始状态 */
-        .reveal {
-            opacity: 0;
-            transform: translateY(40px);
-            filter: blur(10px);
-            transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        @keyframes fluidGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        .reveal.active {
-            opacity: 1;
-            transform: translateY(0);
-            filter: blur(0);
-        }
-
-        /* 顶部导航 */
-        nav {
+        /* --- 极简导航 --- */
+        header {
             position: fixed;
-            top: 0; width: 100%;
-            padding: 40px 60px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            z-index: 1000;
+            top: 0; width: 100%; height: 80px;
+            padding: 0 5%;
+            display: flex; justify-content: space-between; align-items: center;
+            z-index: 2000; transition: 0.5s;
         }
+        header.scrolled { background: rgba(255,255,255,0.85); height: 70px; backdrop-filter: blur(20px); }
 
-        .logo-text {
-            font-size: 1.6rem;
-            font-weight: 900;
-            letter-spacing: 0.2em;
-            cursor: pointer;
+        .logo { 
+            font-family: var(--serif); font-size: 22px; font-weight: 700; 
+            letter-spacing: 5px; color: #fff; text-decoration: none; transition: 0.4s;
         }
+        header.scrolled .logo { color: var(--black); }
 
-        /* 第一屏 */
-        .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            position: relative;
+        .hamburger {
+            width: 28px; height: 12px;
+            display: flex; flex-direction: column; justify-content: space-between;
+            cursor: pointer; z-index: 3000;
         }
+        .hamburger span { display: block; width: 100%; height: 1.5px; background: #fff; transition: 0.4s; }
+        header.scrolled .hamburger span { background: var(--black); }
 
-        .hero-bg-text {
-            position: absolute;
-            font-size: 14vw;
-            font-weight: 900;
-            color: rgba(0,0,0,0.02); /* 极淡的背景装饰 */
-            z-index: 1;
-            user-select: none;
-            letter-spacing: -0.05em;
+        /* --- 悬浮方块菜单 (仅包裹文字) --- */
+        .menu-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100vh;
+            z-index: 2500; visibility: hidden; pointer-events: none; transition: 0.4s;
         }
+        .menu-overlay.open { visibility: visible; pointer-events: auto; }
 
-        .hero-title {
-            z-index: 2;
-            text-align: center;
+        .floating-menu-card {
+            position: absolute; top: 20px; right: 20px;
+            background: var(--white);
+            padding: 60px 40px 40px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.1);
+            opacity: 0; transform: translateY(-20px);
+            transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+            width: 280px;
         }
+        .menu-overlay.open .floating-menu-card { opacity: 1; transform: translateY(0); }
 
-        .hero-title h1 {
-            font-size: 3.5rem;
-            letter-spacing: 0.6em;
-            font-weight: 500;
-            margin-bottom: 20px;
-            margin-right: -0.6em;
+        .close-btn {
+            position: absolute; top: 15px; right: 20px;
+            font-size: 24px; color: #ddd; cursor: pointer; transition: 0.3s;
         }
+        .close-btn:hover { color: var(--black); transform: rotate(90deg); }
 
-        .update-schedule {
-            font-size: 0.9rem;
-            letter-spacing: 0.4em;
-            color: var(--accent);
-            border-top: 1px solid var(--accent);
-            border-bottom: 1px solid var(--accent);
-            padding: 5px 15px;
-            margin-top: 20px;
-            display: inline-block;
+        .menu-links { display: flex; flex-direction: column; gap: 20px; }
+        .menu-links a { 
+            font-family: var(--serif); font-size: 17px; color: var(--black); 
+            text-decoration: none; letter-spacing: 3px; position: relative; width: fit-content;
         }
+        .menu-links a:hover { color: var(--gold); }
 
-        /* 文字叙事区 */
-        .story-section {
-            padding: 150px 15%;
-            min-height: 80vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
+        /* --- 首屏动态大图 --- */
+        .hero { position: relative; height: 100vh; width: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .hero-img {
+            position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://images.unsplash.com/photo-1516979187457-637abb4f9353?q=80&w=2000') center/cover no-repeat;
+            z-index: -1; animation: kenBurns 20s infinite alternate;
         }
+        @keyframes kenBurns { 0% { transform: scale(1); } 100% { transform: scale(1.1); } }
+        .hero-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.25); }
+        .hero-content { position: relative; z-index: 1; text-align: center; color: #fff; }
+        .hero-content h1 { font-family: var(--serif); font-size: clamp(32px, 6vw, 64px); letter-spacing: 12px; font-weight: 500; }
 
-        .story-line {
-            font-size: 1.8rem;
-            margin-bottom: 60px;
-            font-weight: 400;
-            max-width: 800px;
+        /* --- 打字机宣言 --- */
+        .manifesto-box { padding: 150px 10%; text-align: center; min-height: 350px; display: flex; align-items: center; justify-content: center; }
+        #type-text { 
+            font-family: var(--serif); font-size: clamp(18px, 3vw, 28px); 
+            line-height: 2.2; font-weight: 400; color: #333; letter-spacing: 4px;
         }
+        .cursor { display: inline-block; width: 2px; height: 28px; background: var(--gold); margin-left: 5px; animation: flash 1s infinite; vertical-align: middle; }
+        @keyframes flash { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
 
-        .story-line.alt {
-            align-self: flex-end;
-            text-align: right;
+        /* --- 栏目板块 --- */
+        .section-item { padding: 120px 0; text-align: center; overflow: hidden; }
+        .tag { color: var(--gold); font-size: 11px; letter-spacing: 5px; display: block; margin-bottom: 30px; font-weight: bold; }
+        .section-item h2 { font-family: var(--serif); font-size: clamp(24px, 4vw, 36px); margin-bottom: 50px; letter-spacing: 6px; }
+        .img-container { width: 100%; height: 75vh; overflow: hidden; position: relative; }
+        .img-container img { width: 100%; height: 100%; object-fit: cover; transition: 2s; }
+        .section-item:hover img { transform: scale(1.05); }
+
+        /* --- 底部 CONTACT (重点：一左一右进入) --- */
+        footer { background: #0c0c0c; color: #fff; padding: 120px 10% 60px; overflow: hidden; }
+        .footer-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 80px; padding-bottom: 80px; border-bottom: 1px solid #222; }
+        
+        .footer-info h4 { font-family: var(--serif); font-size: 20px; margin-bottom: 40px; color: var(--gold); letter-spacing: 3px; }
+        .c-item { margin-bottom: 25px; }
+        .c-label { font-size: 10px; color: #555; display: block; letter-spacing: 2px; margin-bottom: 8px; text-transform: uppercase; }
+        .c-value { font-size: 15px; color: #999; letter-spacing: 1px; }
+
+        /* 二维码容器 */
+        .footer-qrs { 
+            display: flex; 
+            gap: 40px; 
+            align-items: flex-start;
         }
+        .qr-card { text-align: center; }
+        .qr-card img { width: 120px; height: 120px; background: #fff; padding: 6px; margin-bottom: 20px; filter: grayscale(1); transition: 0.5s; }
+        .qr-card:hover img { filter: grayscale(0); transform: translateY(-5px); }
+        .qr-card p { font-size: 11px; color: #444; letter-spacing: 2px; }
 
-        /* 二维码引导区 */
-        .cta-section {
-            padding: 150px 20px;
-            background-color: #ffffff;
-            text-align: center;
-            border-top: 1px solid #f0f0f0;
-        }
+        .footer-bottom { padding-top: 50px; display: flex; justify-content: space-between; font-size: 11px; color: #333; letter-spacing: 2px; }
 
-        .qr-box {
-            display: inline-block;
-            padding: 40px;
-            border: 1px solid #eee;
-            position: relative;
-            background: #fff;
-            transition: 0.5s;
-        }
-
-        .qr-box:hover {
-            box-shadow: 0 30px 60px rgba(0,0,0,0.05);
-            transform: translateY(-5px);
-        }
-
-        .qr-box img {
-            width: 200px;
-            height: 200px;
-            filter: grayscale(100%);
-            transition: 0.8s;
-        }
-
-        .qr-box:hover img {
-            filter: grayscale(0%);
-        }
-
-        .cta-text {
-            margin-top: 40px;
-        }
-
-        .cta-text h3 {
-            font-size: 1.6rem;
-            font-weight: 500;
-            letter-spacing: 0.3em;
-            margin-bottom: 15px;
-        }
-
-        .cta-text .time-tag {
-            color: #999;
-            font-size: 0.9rem;
-            letter-spacing: 0.2em;
-        }
-
-        footer {
-            padding: 100px 0;
-            text-align: center;
-            background: #fff;
-            font-size: 0.75rem;
-            color: #bbb;
-            letter-spacing: 3px;
-        }
-
-        /* 响应式适配 */
         @media (max-width: 768px) {
-            nav { padding: 30px; }
-            .hero-title h1 { font-size: 2.2rem; }
-            .story-section { padding: 80px 10%; }
-            .story-line { font-size: 1.2rem; }
-            .hero-bg-text { font-size: 20vw; }
+            .hero h1 { font-size: 32px; letter-spacing: 8px; }
+            .footer-grid { flex-direction: column; gap: 60px; }
+            .footer-qrs { width: 100%; justify-content: space-between; gap: 10px; }
+            .qr-card img { width: 100px; height: 100px; }
+            .footer-bottom { flex-direction: column; align-items: center; gap: 20px; }
         }
     </style>
 </head>
 <body>
 
-    <nav>
-        <div class="logo-text">BINGBOOK</div>
-        <div style="font-size: 0.7rem; letter-spacing: 3px;">COLLECTOR</div>
-    </nav>
+    <!-- 导航 -->
+    <header id="navbar">
+        <a href="#" class="logo">BINGBOOK</a>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span><span></span><span></span>
+        </div>
+    </header>
 
+    <!-- 悬浮方块菜单 -->
+    <div class="menu-overlay" id="menuOverlay">
+        <div style="position:absolute; width:100%; height:100%;" onclick="toggleMenu()"></div>
+        <div class="floating-menu-card">
+            <div class="close-btn" onclick="toggleMenu()">✕</div>
+            <nav class="menu-links">
+                <a href="#depth" onclick="toggleMenu()">深度专题 / Insight</a>
+                <a href="#books" onclick="toggleMenu()">深度书评 / Reviews</a>
+                <a href="#podcast" onclick="toggleMenu()">人文播客 / Podcast</a>
+                <a href="#contact" onclick="toggleMenu()">联络 / Contact</a>
+            </nav>
+            <div style="margin-top: 30px; font-size: 9px; color: #eee; letter-spacing: 2px; text-align: right;">BINGBOOK</div>
+        </div>
+    </div>
+
+    <!-- 首页动态大图 -->
     <section class="hero">
-        <!-- 动态视差背景字 -->
-        <div class="hero-bg-text" id="parallaxText">BINGBOOK</div>
+        <div class="hero-img"></div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content" data-aos="fade-up" data-aos-duration="2000">
+            <h1>缤书 bingbook</h1>
+            <p style="letter-spacing: 8px; margin-top: 20px; opacity: 0.7;">RECONSTRUCTING THE MODERN INTELLECT</p>
+        </div>
+    </section>
+
+    <!-- 打字机宣言 -->
+    <section class="manifesto-box">
+        <div id="type-text"></div><span class="cursor"></span>
+    </section>
+
+    <!-- 栏目 1：左滑入 -->
+    <section class="section-item" id="depth">
+        <div data-aos="fade-up">
+            <span class="tag">01 · FEATURE</span>
+            <h2>深度专题</h2>
+            <p style="color:#999; margin-bottom: 50px; letter-spacing: 2px;">记录事实背后的逻辑，穿透表象直抵真实。</p>
+        </div>
+        <div class="img-container" data-aos="fade-right" data-aos-duration="1500">
+            <img src="https://images.unsplash.com/photo-1550592704-6c76defa9985?q=80&w=2000" alt="深度">
+        </div>
+    </section>
+
+    <!-- 栏目 2：右滑入 -->
+    <section class="section-item" id="books" style="background: rgba(0,0,0,0.01);">
+        <div data-aos="fade-up">
+            <span class="tag">02 · READING</span>
+            <h2>深度书评</h2>
+            <p style="color:#999; margin-bottom: 50px; letter-spacing: 2px;">在阅读中重构智识，于文字间锚定坐标。</p>
+        </div>
+        <div class="img-container" data-aos="fade-left" data-aos-duration="1500">
+            <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=2000" alt="书评">
+        </div>
+    </section>
+
+    <!-- 栏目 3：放大入场 -->
+    <section class="section-item" id="podcast">
+        <div data-aos="fade-up">
+            <span class="tag">03 · AUDIO</span>
+            <h2>人文播客</h2>
+            <p style="color:#999; margin-bottom: 50px; letter-spacing: 2px;">听见思想诞生的瞬间，记录时代的理性共鸣。</p>
+        </div>
+        <div class="img-container" data-aos="zoom-in" data-aos-duration="1500">
+            <img src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?q=80&w=2000" alt="播客">
+        </div>
+    </section>
+
+    <!-- 底部 CONTACT -->
+    <footer id="contact">
+        <div class="footer-grid">
+            <!-- 左侧联系信息：向上浮入 -->
+            <div class="footer-info" data-aos="fade-up">
+                <h4>CONTACT</h4>
+                <div class="c-item">
+                    <span class="c-label">SUBMISSION / 投稿</span>
+                    <span class="c-value">mail@bingbook.cn</span>
+                </div>
+                <div class="c-item">
+                    <span class="c-label">COPYRIGHT / 版权微信</span>
+                    <span class="c-value">nnn</span>
+                </div>
+            </div>
+            
+            <!-- 二维码：一左一右对向进入 -->
+            <div class="footer-qrs">
+                <!-- 左边二维码从右侧滑入 (对向) -->
+                <div class="qr-card" data-aos="fade-left" data-aos-delay="200">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BINGBOOK_MP" alt="公众号">
+                    <p>微信公众号</p>
+                </div>
+                <!-- 右边二维码从左侧滑入 (对向) -->
+                <div class="qr-card" data-aos="fade-right" data-aos-delay="400">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BINGBOOK_CHANNELS" alt="视频号">
+                    <p>微信视频号</p>
+                </div>
+            </div>
+        </div>
         
-        <div class="hero-title reveal">
-            <h1>缤纷书写</h1>
-            <p style="letter-spacing: 1.2em; color: var(--text); opacity: 0.7; margin-right: -1.2em;">见字如面</p>
-            <div class="update-schedule">周二 周五 早 10:00 更新</div>
+        <div class="footer-bottom">
+            <p>© 2024 BINGBOOK PROJECT. ALL RIGHTS RESERVED.</p>
+            <p>沪ICP备 2024098866号</p>
         </div>
-    </section>
-
-    <section class="story-section">
-        <p class="story-line reveal">生活原本是一本白卷，</p>
-        <p class="story-line alt reveal" style="color: var(--accent);">直到我们开始记录。</p>
-        <p class="story-line reveal">不追逐瞬息万变的潮水，</p>
-        <p class="story-line alt reveal">只沉淀值得反复翻阅的缤纷。</p>
-        <p class="story-line reveal">BINGBOOK，</p>
-        <p class="story-line alt reveal">和你一起，收集时代的温度。</p>
-    </section>
-
-    <section class="cta-section">
-        <div class="reveal">
-            <div class="qr-box">
-                <!-- 公众号二维码 -->
-                <img src="/img/wx.jpg" alt="BINGBOOK 公众号二维码">
-            </div>
-            <div class="cta-text">
-                <h3>关注缤书公众号</h3>
-                <p class="time-tag">每周二 · 周五 上午 10:00，准时开启</p>
-                <div style="margin-top: 30px; font-size: 0.8rem; color: #ccc;">发现生活的另一种可能</div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        &copy; 2026 BINGBOOK 缤书 · 版权所有 <br><br>
-        DESIGNED FOR THOUGHTFUL READING
     </footer>
 
+    <!-- 脚本 -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
-        // 动画控制：当元素进入视口时触发显示效果
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('active');
-                }
-            });
-        }, { threshold: 0.15 });
+        // 初始化动画
+        AOS.init({ once: false });
 
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        // 打字机逻辑
+        const text = "我们在信息的旷野里搜寻智识的火光，\n拒绝瞬间的狂欢，只为恒久的沉淀。";
+        const typeEl = document.getElementById('type-text');
+        let i = 0;
+        function type() {
+            if (i < text.length) {
+                typeEl.innerHTML += text.charAt(i) === "\n" ? "<br>" : text.charAt(i);
+                i++;
+                setTimeout(type, 120);
+            }
+        }
+        const obs = new IntersectionObserver((entries) => {
+            if(entries[0].isIntersecting) {
+                type();
+                obs.unobserve(entries[0].target);
+            }
+        }, { threshold: 0.5 });
+        obs.observe(document.querySelector('.manifesto-box'));
 
-        // 视差滚动：背景大字随鼠标滚动产生位移
+        // 导航栏
         window.addEventListener('scroll', () => {
-            const scrollY = window.pageYOffset;
-            const bgText = document.getElementById('parallaxText');
-            // 随滚动向左缓慢滑动
-            bgText.style.transform = `translateX(${-scrollY * 0.2}px)`;
-            // 滚动越深，透明度越浅
-            bgText.style.opacity = `${0.02 - scrollY * 0.00005}`;
+            const h = document.getElementById('navbar');
+            window.scrollY > 80 ? h.classList.add('scrolled') : h.classList.remove('scrolled');
         });
+
+        // 菜单
+        function toggleMenu() {
+            const overlay = document.getElementById('menuOverlay');
+            overlay.classList.toggle('open');
+            document.body.style.overflow = overlay.classList.contains('open') ? 'hidden' : 'auto';
+        }
     </script>
 </body>
 </html>
