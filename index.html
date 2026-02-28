@@ -3,11 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>缤书 bingbook | 思想的存档者</title>
+    
+    <!-- SEO 关键词优化 -->
+    <title>缤书 bingbook | 思想的存档者 - 深度自媒体官网</title>
+    <meta name="keywords" content="缤书, bingbook, 缤书官网, 深度自媒体, 深度专题, 深度报道, 深度书评, 人文播客, 智识存档, 深度阅读, 思想存档">
+    <meta name="description" content="缤书 bingbook（思想的存档者）是一个专注于深度专题、人文书评及高品质播客的自媒体品牌。我们在信息的旷野里搜寻智识的火光，拒绝瞬间的狂欢，只为恒久的沉淀。致力于为思考者提供穿透表象的深度洞察与智识存档。">
+    <meta name="author" content="缤书 bingbook">
+
     <!-- 引入思源宋体 -->
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@300;500;700&display=swap" rel="stylesheet">
     <!-- 引入 AOS 动画库 -->
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    
     <style>
         :root {
             --gold: #b1946a;
@@ -119,7 +126,7 @@
         .img-container img { width: 100%; height: 100%; object-fit: cover; transition: 2s; }
         .section-item:hover img { transform: scale(1.05); }
 
-        /* --- 底部 CONTACT (重点：一左一右进入) --- */
+        /* --- 底部 CONTACT (对向进入二维码) --- */
         footer { background: #0c0c0c; color: #fff; padding: 120px 10% 60px; overflow: hidden; }
         .footer-grid { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 80px; padding-bottom: 80px; border-bottom: 1px solid #222; }
         
@@ -129,11 +136,7 @@
         .c-value { font-size: 15px; color: #999; letter-spacing: 1px; }
 
         /* 二维码容器 */
-        .footer-qrs { 
-            display: flex; 
-            gap: 40px; 
-            align-items: flex-start;
-        }
+        .footer-qrs { display: flex; gap: 40px; align-items: flex-start; }
         .qr-card { text-align: center; }
         .qr-card img { width: 120px; height: 120px; background: #fff; padding: 6px; margin-bottom: 20px; filter: grayscale(1); transition: 0.5s; }
         .qr-card:hover img { filter: grayscale(0); transform: translateY(-5px); }
@@ -160,7 +163,7 @@
         </div>
     </header>
 
-    <!-- 悬浮方块菜单 -->
+    <!-- 极简悬浮方块菜单 -->
     <div class="menu-overlay" id="menuOverlay">
         <div style="position:absolute; width:100%; height:100%;" onclick="toggleMenu()"></div>
         <div class="floating-menu-card">
@@ -185,12 +188,12 @@
         </div>
     </section>
 
-    <!-- 打字机宣言 -->
+    <!-- 打字机品牌宣言 -->
     <section class="manifesto-box">
         <div id="type-text"></div><span class="cursor"></span>
     </section>
 
-    <!-- 栏目 1：左滑入 -->
+    <!-- 栏目 1：右滑入 -->
     <section class="section-item" id="depth">
         <div data-aos="fade-up">
             <span class="tag">01 · FEATURE</span>
@@ -198,11 +201,11 @@
             <p style="color:#999; margin-bottom: 50px; letter-spacing: 2px;">记录事实背后的逻辑，穿透表象直抵真实。</p>
         </div>
         <div class="img-container" data-aos="fade-right" data-aos-duration="1500">
-            <img src="https://images.unsplash.com/photo-1550592704-6c76defa9985?q=80&w=2000" alt="深度">
+            <img src="https://images.unsplash.com/photo-1550592704-6c76defa9985?q=80&w=2000" alt="深度专题">
         </div>
     </section>
 
-    <!-- 栏目 2：右滑入 -->
+    <!-- 栏目 2：左滑入 -->
     <section class="section-item" id="books" style="background: rgba(0,0,0,0.01);">
         <div data-aos="fade-up">
             <span class="tag">02 · READING</span>
@@ -210,19 +213,19 @@
             <p style="color:#999; margin-bottom: 50px; letter-spacing: 2px;">在阅读中重构智识，于文字间锚定坐标。</p>
         </div>
         <div class="img-container" data-aos="fade-left" data-aos-duration="1500">
-            <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=2000" alt="书评">
+            <img src="https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?q=80&w=2000" alt="深度书评">
         </div>
     </section>
 
     <!-- 栏目 3：放大入场 -->
     <section class="section-item" id="podcast">
         <div data-aos="fade-up">
-            <span class="tag">03 · AUDIO</span>
+            <span class="tag">03 · SONIC</span>
             <h2>人文播客</h2>
             <p style="color:#999; margin-bottom: 50px; letter-spacing: 2px;">听见思想诞生的瞬间，记录时代的理性共鸣。</p>
         </div>
         <div class="img-container" data-aos="zoom-in" data-aos-duration="1500">
-            <img src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?q=80&w=2000" alt="播客">
+            <img src="https://images.unsplash.com/photo-1590602847861-f357a9332bbc?q=80&w=2000" alt="人文播客">
         </div>
     </section>
 
@@ -244,14 +247,14 @@
             
             <!-- 二维码：一左一右对向进入 -->
             <div class="footer-qrs">
-                <!-- 左边二维码从右侧滑入 (对向) -->
+                <!-- 公众号从右侧滑入 -->
                 <div class="qr-card" data-aos="fade-left" data-aos-delay="200">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BINGBOOK_MP" alt="公众号">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BINGBOOK_MP" alt="微信公众号">
                     <p>微信公众号</p>
                 </div>
-                <!-- 右边二维码从左侧滑入 (对向) -->
+                <!-- 视频号从左侧滑入 -->
                 <div class="qr-card" data-aos="fade-right" data-aos-delay="400">
-                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BINGBOOK_CHANNELS" alt="视频号">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=BINGBOOK_CHANNELS" alt="微信视频号">
                     <p>微信视频号</p>
                 </div>
             </div>
@@ -263,7 +266,7 @@
         </div>
     </footer>
 
-    <!-- 脚本 -->
+    <!-- 脚本逻辑 -->
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
         // 初始化动画
@@ -280,6 +283,7 @@
                 setTimeout(type, 120);
             }
         }
+        // 滚动触发
         const obs = new IntersectionObserver((entries) => {
             if(entries[0].isIntersecting) {
                 type();
@@ -288,13 +292,13 @@
         }, { threshold: 0.5 });
         obs.observe(document.querySelector('.manifesto-box'));
 
-        // 导航栏
+        // 导航滚动效果
         window.addEventListener('scroll', () => {
             const h = document.getElementById('navbar');
             window.scrollY > 80 ? h.classList.add('scrolled') : h.classList.remove('scrolled');
         });
 
-        // 菜单
+        // 菜单开关
         function toggleMenu() {
             const overlay = document.getElementById('menuOverlay');
             overlay.classList.toggle('open');
